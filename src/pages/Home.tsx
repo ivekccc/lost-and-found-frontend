@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import http from '../serivices/http-service';
+import { Button } from 'react-bootstrap';
 
 const Home: React.FC = () => {
   const [secret, setSecret] = useState<string | null>(null);
@@ -17,11 +18,18 @@ const Home: React.FC = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('refreshToken');
+    window.location.href = '/login';
+  };
+
   return (
     <div>
       <h1>Dobrodošli na Lost & Found!</h1>
       <p>Ovo je početna stranica.</p>
-      <button onClick={handleSecret}>Prikaži secret podatke</button>
+      <Button variant="primary" onClick={handleLogout}>Logout</Button>{' '}
+      <Button variant="secondary" onClick={handleSecret}>Prikaži secret podatke</Button>
       {secret && <div>Secret: {JSON.stringify(secret)}</div>}
       {error && <div style={{color: 'red'}}>{error}</div>}
     </div>
