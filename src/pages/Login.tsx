@@ -12,6 +12,7 @@ const Login: React.FC = () => {
     try {
       const res = await http.post('/auth/login', { username, password });
       localStorage.setItem('authToken', res.data.token);
+      localStorage.setItem('refreshToken', res.data.refreshToken);
       window.location.href = '/'; // redirect na home
     } catch (err: any) {
       setError(err.response?.data?.message || 'Greška pri prijavi');
