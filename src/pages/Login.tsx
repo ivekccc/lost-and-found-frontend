@@ -1,62 +1,82 @@
 import React, { useState } from 'react';
-import http from '../serivices/http-service';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { GOOGLE_CLIENT_ID } from '../shared/config';
+import { login, googleLogin } from '../features/auth/authService';
+import { AuthRequestDTO } from '../entities/AuthRequestDTO';
+import { AuthResponseDTO } from '../entities/AuthResponseDTO';
+import { useForm,SubmitHandler } from 'react-hook-form';
+import * as yup from "yup"
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Button, Form } from 'react-bootstrap';
+import ErrorMessage from '../shared/ErrorMessage';
+
 
 const Login: React.FC = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
+
+  const authRequestSchema = yup.object({
+    username: yup.string().required('Username is required'),
+    password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
+  });
+
+  const { register, formState: { errors }, handleSubmit } = useForm<AuthRequestDTO>({
+    resolver: yupResolver(authRequestSchema)
+  });
+
+  const onSubmit: SubmitHandler<AuthRequestDTO> = async (authRequest) => await handleLogin(authRequest);
+
+
+
+  const handleLogin = async (authRequest: AuthRequestDTO) => {
     try {
-      const res = await http.post('/auth/login', { username, password });
-      localStorage.setItem('authToken', res.data.token);
-      localStorage.setItem('refreshToken', res.data.refreshToken);
+      const res = await login(authRequest);
+      const data: AuthResponseDTO = res.data;
+      localStorage.setItem('authToken', data.token);
+      localStorage.setItem('refreshToken', data.refreshToken);
       window.location.href = '/'; // redirect na home
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Greška pri prijavi');
     }
   };
 
-const GOOGLE_CLIENT_ID = '1063269578049-o9soc86q7r5gvruurs3se01ftnhckha7.apps.googleusercontent.com'; // zameni sa pravim clientId
-
   const handleGoogleSuccess = async (credentialResponse: any) => {
-    setError('');
     try {
-      const res = await http.post('/auth/google', { credential: credentialResponse.credential });
-      localStorage.setItem('authToken', res.data.token);
-      localStorage.setItem('refreshToken', res.data.refreshToken);
+      const res = await googleLogin(credentialResponse.credential);
+      const data: AuthResponseDTO = res.data;
+      localStorage.setItem('authToken', data.token);
+      localStorage.setItem('refreshToken', data.refreshToken);
       window.location.href = '/';
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Google login greška');
     }
   };
 
   const handleGoogleError = () => {
-    setError('Google login neuspešan');
   };
 
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <div>
         <h2>Prijava</h2>
-        <form onSubmit={handleSubmit}>
-          <input
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Form.Group className="mb-3" controlId="formUsername">
+          <Form.Control
             type="text"
-            placeholder="Korisničko ime"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
+            placeholder="Username"
+            {...register("username")}
+            aria-invalid={errors.username ? "true" : "false"}
           />
-          <input
+          <ErrorMessage message={errors.username?.message} />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formPassword">
+          <Form.Control
             type="password"
-            placeholder="Lozinka"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
+            placeholder="Password"
+            {...register("password")}
+            aria-invalid={errors.password ? "true" : "false"}
           />
-          <button type="submit">Prijavi se</button>
-        </form>
+          <ErrorMessage message={errors.password?.message} />
+          </Form.Group>
+          <Button type="submit">Log In</Button>
+        </Form>
         <div style={{ margin: '20px 0' }}>
           <GoogleLogin
             onSuccess={handleGoogleSuccess}
@@ -64,10 +84,11 @@ const GOOGLE_CLIENT_ID = '1063269578049-o9soc86q7r5gvruurs3se01ftnhckha7.apps.go
             useOneTap
           />
         </div>
-        {error && <div>{error}</div>}
       </div>
     </GoogleOAuthProvider>
   );
 };
 
 export default Login;
+
+
