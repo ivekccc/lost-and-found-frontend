@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import http from '../serivices/http-service';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 
+const GOOGLE_CLIENT_ID = '1063269578049-o9soc86q7r5gvruurs3se01ftnhckha7.apps.googleusercontent.com'; // zameni sa pravim clientId
+
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -14,13 +16,11 @@ const Login: React.FC = () => {
       const res = await http.post('/auth/login', { username, password });
       localStorage.setItem('authToken', res.data.token);
       localStorage.setItem('refreshToken', res.data.refreshToken);
-      window.location.href = '/'; // redirect na home
+      window.location.href = '/';
     } catch (err: any) {
       setError(err.response?.data?.message || 'Greška pri prijavi');
     }
   };
-
-const GOOGLE_CLIENT_ID = '1063269578049-o9soc86q7r5gvruurs3se01ftnhckha7.apps.googleusercontent.com'; // zameni sa pravim clientId
 
   const handleGoogleSuccess = async (credentialResponse: any) => {
     setError('');
