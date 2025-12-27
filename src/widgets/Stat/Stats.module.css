@@ -1,0 +1,19 @@
+.statBox {
+  border-radius: 12px;
+  padding: 8px 16px;
+  text-align: center;
+  background: var(--emerald);
+  min-width: 120px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.statTitle {
+  font-size: 1rem;
+  color: hsl(var(--gray-light));
+  margin-top: 4px;
+}

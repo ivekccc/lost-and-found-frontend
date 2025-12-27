@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Navigate } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import Home from '../pages/Home';
-import Login from '../pages/Login';
+import Login from '../pages/Login/Login';
 import Register from '../pages/Register';
 
 // Definicija svih ruta aplikacije na jednom mestu

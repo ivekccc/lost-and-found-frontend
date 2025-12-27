@@ -1,0 +1,190 @@
+/* Separator block for social login */
+
+.leftSide {
+  height: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  .formContainer {
+    width: 55%;
+    height: 100%;
+    margin-top: 15%;
+    display: flex;
+    flex-direction: column;
+
+    .titleContainer {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .title {
+      margin-left: 8px;
+      text-align: start;
+    }
+
+    .titleIcon {
+      border-radius: 8px;
+      padding: 15px 10px;
+      background-color: var(--ocean-mist);
+      height: 75%;
+      min-width: 2.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: #fff;
+      box-sizing: border-box;
+    }
+  }
+  .loginButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: var(--ocean-mist);
+    border: none;
+    margin-top: 24px;
+    gap: 8px;
+    height: 45px;
+
+    svg {
+      font-size: 0.8rem;
+    }
+    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .loginButton:hover,
+  .loginButton:focus {
+    background-color: var(--ocean-mist);
+    color: inherit;
+    filter: none;
+    box-shadow: none;
+    outline: none;
+    color: white;
+    transform: scale(1.03);
+  }
+  .loginButton:active {
+    background-color: var(--ocean-mist);
+    color: inherit;
+    filter: none;
+    box-shadow: none;
+    outline: none;
+    color: white;
+    transform: scale(0.98);
+  }
+
+  .separatorBlock {
+    position: relative;
+    margin-top: 24px;
+  }
+
+  .separatorLineContainer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .separatorLine {
+    width: 100%;
+    border-top: 1px solid #d1d5db; /* light gray */
+  }
+
+  .separatorTextContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    font-size: 0.95rem;
+  }
+
+  .separatorText {
+    background: #fff;
+    padding: 0 1rem;
+    color: #6c757d; /* muted foreground */
+  }
+  /* Naslov i podnaslov za lepu prezentaciju */
+  .titleText {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0;
+  }
+
+  .subtitleText {
+    font-size: 1.1rem;
+    color: hsl(var(--gray-soft));
+    margin-bottom: 0;
+  }
+
+  .googleButton {
+    /* poveži bootstrap dugme sa tvojom primary bojom */
+    --bs-btn-color: var(--ocean-mist);
+    --bs-btn-border-color: var(--ocean-mist);
+    --bs-btn-bg: transparent;
+
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--ocean-mist);
+    --bs-btn-hover-border-color: var(--ocean-mist);
+
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--ocean-mist);
+    --bs-btn-active-border-color: var(--ocean-mist);
+
+    --bs-btn-focus-shadow-rgb: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 24px;
+    gap: 8px;
+    height: 45px;
+
+    svg {
+      font-size: 0.8rem;
+    }
+  }
+  .registerLink {
+    color: var(--ocean-mist);
+    text-decoration: none;
+    font-weight: 500;
+  }
+}
+
+.rightSide {
+  height: 100%;
+  background-color: var(--ocean-mist);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+
+  .rightSideContent {
+    width: 55%;
+  }
+
+  .titleIcon {
+    text-align: center;
+    font-size: 6rem;
+    margin-bottom: 20px;
+  }
+
+  .titleText {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .subtitleText {
+    text-align: center;
+    color: hsl(var(--gray-light));
+  }
+
+  .stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 40px;
+  }
+}
