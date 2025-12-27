@@ -1,3 +1,7 @@
+.errorInput {
+  border: 2px solid hsl(var(--destructive)) !important;
+  box-shadow: 0 0 0 2px hsl(var(--destructive) / 0.15);
+}
 .form-control-text {
   height: 45px;
 }

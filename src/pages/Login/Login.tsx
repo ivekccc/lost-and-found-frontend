@@ -78,7 +78,7 @@ const Login: React.FC = () => {
               <Form.Group>
                 <Form.Label>Username</Form.Label>
                 <Form.Control
-                  className="form-control-text"
+                  className={`form-control-text ${errors.username ? 'errorInput' : ''}`}
                   type="text"
                   placeholder="Enter username"
                   {...register('username')}
@@ -89,7 +89,7 @@ const Login: React.FC = () => {
               <Form.Group className="mt-3">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
-                  className="form-control-text"
+                  className={`form-control-text ${errors.password ? 'errorInput' : ''}`}
                   type="password"
                   placeholder="Enter password"
                   {...register('password')}
@@ -148,39 +148,6 @@ const Login: React.FC = () => {
         </Col>
       </Row>
     </Container>
-    // <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-    //   <div>
-    //     <h2>Prijava</h2>
-    //     <Form onSubmit={handleSubmit(onSubmit)}>
-    //       <Form.Group className="mb-3" controlId="formUsername">
-    //       <Form.Control
-    //         type="text"
-    //         placeholder="Username"
-    //         {...register("username")}
-    //         aria-invalid={errors.username ? "true" : "false"}
-    //       />
-    //       <ErrorMessage message={errors.username?.message} />
-    //       </Form.Group>
-    //       <Form.Group className="mb-3" controlId="formPassword">
-    //       <Form.Control
-    //         type="password"
-    //         placeholder="Password"
-    //         {...register("password")}
-    //         aria-invalid={errors.password ? "true" : "false"}
-    //       />
-    //       <ErrorMessage message={errors.password?.message} />
-    //       </Form.Group>
-    //       <Button type="submit">Log In</Button>
-    //     </Form>
-    //     <div style={{ margin: '20px 0' }}>
-    //       <GoogleLogin
-    //         onSuccess={handleGoogleSuccess}
-    //         onError={handleGoogleError}
-    //         useOneTap
-    //       />
-    //     </div>
-    //   </div>
-    // </GoogleOAuthProvider>
   );
 };
 
