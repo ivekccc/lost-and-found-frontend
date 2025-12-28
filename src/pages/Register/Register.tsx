@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './Login.module.css';
+import styles from './Register.module.css';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import { GOOGLE_CLIENT_ID } from '../../shared/config';
-import { login, googleLogin } from '../../features/auth/authService';
+import { registerUser, googleLogin } from '../../features/auth/authService';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,30 +12,31 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import Stats from '../../widgets/Stat/Stats';
-import { AuthRequestDTO, AuthResponseDTO } from '../../entities/models';
+import { RegisterRequestDto, AuthResponseDTO } from '../../entities/models';
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
     const [saving, setSaving] = React.useState(false);
-  const authRequestSchema = yup.object({
+  const registerSchema = yup.object({
     email: yup.string().email('Invalid email').required('Email is required'),
-    password: yup
-      .string()
-      .required('Password is required')
-      .min(6, 'Password must be at least 6 characters'),
+    password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
+    firstName: yup.string().required('First name is required').min(3, 'First name must be at least 3 characters'),
+    lastName: yup.string().required('Last name is required').min(3, 'Last name must be at least 3 characters'),
+    username: yup.string().required('Username is required').min(3, 'Username must be at least 3 characters'),
+    phoneNumber: yup.string().required('Phone number is required').min(6, 'Phone number must be at least 6 characters'),
   });
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<AuthRequestDTO>({
-    resolver: yupResolver(authRequestSchema),
+  } = useForm<RegisterRequestDto>({
+    resolver: yupResolver(registerSchema),
   });
 
-  const onSubmit: SubmitHandler<AuthRequestDTO> = async (authRequest) => {
+  const onSubmit: SubmitHandler<RegisterRequestDto> = async (registerRequest) => {
     setSaving(true);
     try {
-      const res = await login(authRequest);
+      const res = await registerUser(registerRequest);
       const data: AuthResponseDTO = res.data;
       localStorage.setItem('authToken', data.token);
       localStorage.setItem('refreshToken', data.refreshToken);
@@ -60,8 +61,8 @@ const Login: React.FC = () => {
   const handleGoogleError = () => {};
 
   return (
-    <Container fluid >
-      <Row className="h-100">
+    <Container fluid>
+      <Row>
         <Col className={styles.leftSide}>
           <div className={styles.formContainer}>
             <div className={styles.titleContainer}>
@@ -72,8 +73,8 @@ const Login: React.FC = () => {
               </div>
             </div>
             <div className="d-flex flex-column mt-4">
-              <h2 className={styles.titleText}>Welcome Back!</h2>
-              <span className={styles.subtitleText}>Login to continue your search</span>
+              <h2 className={styles.titleText}>Welcome!</h2>
+              <span className={styles.subtitleText}>Register to continue your search</span>
             </div>
             <Form className="mt-4">
               <Form.Group>
@@ -98,10 +99,54 @@ const Login: React.FC = () => {
                 ></Form.Control>
                 <ErrorMessage message={errors.password?.message} />
               </Form.Group>
-              <button className={styles.loginButton} type="submit" onClick={handleSubmit(onSubmit)} disabled={saving}>
-                {saving ? 'Logging in...' : 'Log In'}
+              <Form.Group className="mt-3">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  className={`form-control-text ${errors.firstName ? 'errorInput' : ''}`}
+                  type="text"
+                  placeholder="Enter first name"
+                  {...register('firstName')}
+                  aria-invalid={errors.firstName ? 'true' : 'false'}
+                ></Form.Control>
+                <ErrorMessage message={errors.firstName?.message} />
+              </Form.Group>
+              <Form.Group className="mt-3">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  className={`form-control-text ${errors.lastName ? 'errorInput' : ''}`}
+                  type="text"
+                  placeholder="Enter last name"
+                  {...register('lastName')}
+                  aria-invalid={errors.lastName ? 'true' : 'false'}
+                ></Form.Control>
+                <ErrorMessage message={errors.lastName?.message} />
+              </Form.Group>
+              <Form.Group className="mt-3">
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  className={`form-control-text ${errors.username ? 'errorInput' : ''}`}
+                  type="text"
+                  placeholder="Enter username"
+                  {...register('username')}
+                  aria-invalid={errors.username ? 'true' : 'false'}
+                ></Form.Control>
+                <ErrorMessage message={errors.username?.message} />
+              </Form.Group>
+              <Form.Group className="mt-3">
+                <Form.Label>Phone Number</Form.Label>
+                <Form.Control
+                  className={`form-control-text ${errors.phoneNumber ? 'errorInput' : ''}`}
+                  type="text"
+                  placeholder="Enter phone number"
+                  {...register('phoneNumber')}
+                  aria-invalid={errors.phoneNumber ? 'true' : 'false'}
+                ></Form.Control>
+                <ErrorMessage message={errors.phoneNumber?.message} />
+              </Form.Group>
+              <Button className={styles.loginButton} type="submit" onClick={handleSubmit(onSubmit)} disabled={saving}>
+                {saving ? 'Saving...' : 'Register'}
                 <FontAwesomeIcon icon={faArrowRight} />
-              </button>
+              </Button>
             </Form>
             <div className={styles.separatorBlock}>
               <div className={styles.separatorLineContainer}>
@@ -121,9 +166,9 @@ const Login: React.FC = () => {
               </GoogleOAuthProvider>
             </div>
             <div className="mt-4 d-flex justify-content-center align-items-center gap-2">
-              <span>Don't have an account? </span>
-              <Link to="/register" className={styles.registerLink}>
-                Resgister
+              <span>Already have an account? </span>
+              <Link to="/login" className={styles.registerLink}>
+                Login
               </Link>
             </div>
 
@@ -152,4 +197,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Register;

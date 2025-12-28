@@ -4,6 +4,7 @@
   background-color: white;
   display: flex;
   justify-content: center;
+  margin-bottom: 20px;
   .formContainer {
     width: 55%;
     height: 100%;
@@ -41,22 +42,11 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-   color: #fff !important;
-    border-radius: 8px;
     background-color: var(--ocean-mist);
     border: none;
     margin-top: 24px;
     gap: 8px;
     height: 45px;
-
-     &:disabled{
-       background-color: #b3c2c9 !important;
-       color: #fff !important;
-       opacity: 0.7;
-       cursor: not-allowed;
-       box-shadow: none;
-       filter: grayscale(0.2);
-     }
 
     svg {
       font-size: 0.8rem;
@@ -162,7 +152,7 @@
 }
 
 .rightSide {
-  height: 100%;
+  min-height: 100vh;
   background-color: var(--ocean-mist);
   display: flex;
   justify-content: center;
@@ -179,7 +169,7 @@
     font-size: 6rem;
     margin-bottom: 20px;
   }
-    min-height: 100vh;
+
   .titleText {
     text-align: center;
     margin-bottom: 20px;
