@@ -1,0 +1,50 @@
+.navbar {
+  height: 72px;
+  background-color: white;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.brandIcon {
+  width: 40px;
+  height: 40px;
+  background-color: var(--ocean-mist);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.brandTitle {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.brandSpan {
+  font-size: 0.9rem;
+}
